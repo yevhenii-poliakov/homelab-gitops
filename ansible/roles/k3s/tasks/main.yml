@@ -1,0 +1,95 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install required packages
+  apt:
+    name:
+      - curl
+      - wget
+      - git
+      - vim
+      - htop
+      - ufw
+    state: present
+
+- name: Configure UFW - allow SSH
+  ufw:
+    rule: allow
+    port: "22"
+    proto: tcp
+
+- name: Configure UFW - allow HTTP
+  ufw:
+    rule: allow
+    port: "80"
+    proto: tcp
+
+- name: Configure UFW - allow HTTPS
+  ufw:
+    rule: allow
+    port: "443"
+    proto: tcp
+
+- name: Configure UFW - allow k3s API
+  ufw:
+    rule: allow
+    port: "6443"
+    proto: tcp
+
+- name: Enable UFW
+  ufw:
+    state: enabled
+    policy: deny
+
+- name: Check if k3s is already installed
+  stat:
+    path: /usr/local/bin/k3s
+  register: k3s_binary
+
+- name: Install k3s
+  shell: |
+    curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="{{ k3s_version }}" sh -s - \
+      --disable traefik \
+      --write-kubeconfig-mode 644
+  when: not k3s_binary.stat.exists
+
+- name: Wait for k3s to be ready
+  wait_for:
+    path: /etc/rancher/k3s/k3s.yaml
+    timeout: 60
+
+- name: Ensure k3s service is running
+  systemd:
+    name: k3s
+    state: started
+    enabled: yes
+
+- name: Create .kube directory locally
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.kube"
+    state: directory
+    mode: '0700'
+  delegate_to: localhost
+
+- name: Fetch kubeconfig
+  fetch:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: /tmp/k3s-homelab.yaml
+    flat: yes
+
+- name: Fix kubeconfig server address
+  replace:
+    path: /tmp/k3s-homelab.yaml
+    regexp: 'https://127.0.0.1:6443'
+    replace: "https://{{ k3s_server_ip }}:6443"
+  delegate_to: localhost
+
+- name: Copy kubeconfig to local .kube
+  copy:
+    src: /tmp/k3s-homelab.yaml
+    dest: "{{ lookup('env', 'HOME') }}/.kube/homelab.yaml"
+    mode: '0600'
+  delegate_to: localhost

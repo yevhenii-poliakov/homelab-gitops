@@ -1,0 +1,6 @@
+---
+- name: Bootstrap homelab server
+  hosts: homelab
+  become: true
+  roles:
+    - k3s
