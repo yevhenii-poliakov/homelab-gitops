@@ -42,6 +42,20 @@ resource "hcloud_firewall" "homelab" {
     protocol  = "icmp"
     source_ips = ["0.0.0.0/0", "::/0"]
   }
+
+rule {
+  direction = "in"
+  protocol  = "tcp"
+  port      = "30080"
+  source_ips = ["0.0.0.0/0", "::/0"]
+}
+
+rule {
+  direction = "in"
+  protocol  = "tcp"
+  port      = "30443"
+  source_ips = ["0.0.0.0/0", "::/0"]
+}
 }
 
 resource "hcloud_server" "homelab" {

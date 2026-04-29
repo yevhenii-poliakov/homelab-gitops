@@ -1,0 +1,14 @@
+grafana:
+  enabled: true
+  adminPassword: "homelab123"
+  service:
+    type: NodePort
+    nodePort: 31000
+
+prometheus:
+  enabled: true
+  prometheusSpec:
+    retention: 7d
+
+alertmanager:
+  enabled: false
