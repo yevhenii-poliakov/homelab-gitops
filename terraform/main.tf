@@ -56,6 +56,12 @@ rule {
   port      = "30443"
   source_ips = ["0.0.0.0/0", "::/0"]
 }
+rule {
+  direction  = "in"
+  protocol   = "tcp"
+  port       = "31000"
+  source_ips = ["0.0.0.0/0", "::/0"]
+}
 }
 
 resource "hcloud_server" "homelab" {
@@ -72,3 +78,4 @@ resource "hcloud_server" "homelab" {
     managed_by  = "terraform"
   }
 }
+
