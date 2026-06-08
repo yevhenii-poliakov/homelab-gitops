@@ -11,4 +11,13 @@ prometheus:
     retention: 7d
 
 alertmanager:
-  enabled: false
+  enabled: true
+  alertmanagerSpec: {}
+
+prometheusOperator:
+  admissionWebhooks:
+    enabled: false
+    patch:
+      enabled: false
+  tls:
+    enabled: false
