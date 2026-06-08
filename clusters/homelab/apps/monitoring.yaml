@@ -11,6 +11,9 @@ spec:
     repoURL: https://github.com/yevhenii-poliakov/homelab-gitops
     targetRevision: HEAD
     path: clusters/homelab/monitoring
+    helm:
+      valueFiles:
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
