@@ -4,6 +4,7 @@ grafana:
   service:
     type: NodePort
     nodePort: 31000
+    port: 80
 
 prometheus:
   enabled: true
