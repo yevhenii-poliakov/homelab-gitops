@@ -14,7 +14,7 @@ One thing I learned the hard way: ArgoCD's `selfHeal` reverts any manual `kubect
 | Helm | kube-prometheus-stack deployed as a Helm chart |
 | ArgoCD / GitOps | App-of-apps pattern — commit triggers deploy |
 | Prometheus + Grafana | Full observability stack with pre-built dashboards |
-| GitLab CI / GitHub Actions | (in progress) |
+| GitHub Actions | CI validates Terraform, YAML and Kubernetes manifests | 
 
 ## Architecture
 
