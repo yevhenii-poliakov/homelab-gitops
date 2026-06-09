@@ -20,34 +20,34 @@ One thing I learned the hard way: ArgoCD's `selfHeal` reverts any manual `kubect
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                   GitHub Repository                  │
-│                                                      │
-│  terraform/          clusters/homelab/               │
+│                   GitHub Repository                 │
+│                                                     │
+│  terraform/          clusters/homelab/              │
 │  ├── main.tf         ├── root-app.yaml  (ArgoCD)    │
-│  ├── variables.tf    └── apps/                       │
-│  └── outputs.tf          └── monitoring.yaml         │
-│                                                      │
-│  ansible/            clusters/homelab/monitoring/    │
-│  ├── playbook.yml    ├── Chart.yaml                  │
+│  ├── variables.tf    └── apps/                      │
+│  └── outputs.tf          └── monitoring.yaml        │
+│                                                     │
+│  ansible/            clusters/homelab/monitoring/   │
+│  ├── playbook.yml    ├── Chart.yaml                 │
 │  └── roles/k3s/      └── values.yaml                │
 └─────────────────────────────────────────────────────┘
          │                        │
          │ terraform apply        │ ArgoCD watches
          ▼                        ▼
 ┌─────────────────┐    ┌──────────────────────────────┐
-│  Hetzner Cloud  │    │     k3s Cluster               │
-│                 │    │                               │
-│  CX22 VM        │    │  argocd/                      │
-│  2 vCPU         │    │  ├── argocd-server            │
-│  4 GB RAM       │    │  ├── argocd-repo-server       │
-│  40 GB SSD      │    │  └── argocd-application-ctrl  │
-│  nbg1           │    │                               │
-│                 │    │  monitoring/                  │
-│  Firewall:      │    │  ├── prometheus               │
-│  22, 80, 443    │    │  ├── grafana                  │
-│  6443, 30080    │    │  ├── alertmanager             │
-│  30443, 31000   │    │  ├── kube-state-metrics       │
-└─────────────────┘    │  └── node-exporter            │
+│  Hetzner Cloud  │    │     k3s Cluster              │
+│                 │    │                              │
+│  CX22 VM        │    │  argocd/                     │
+│  2 vCPU         │    │  ├── argocd-server           │
+│  4 GB RAM       │    │  ├── argocd-repo-server      │
+│  40 GB SSD      │    │  └── argocd-application-ctrl │
+│  nbg1           │    │                              │
+│                 │    │  monitoring/                 │
+│  Firewall:      │    │  ├── prometheus              │
+│  22, 80, 443    │    │  ├── grafana                 │
+│  6443, 30080    │    │  ├── alertmanager            │
+│  30443, 31000   │    │  ├── kube-state-metrics      │
+└─────────────────┘    │  └── node-exporter           │
          │             └──────────────────────────────┘
          │
          │ ansible-playbook
