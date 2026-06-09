@@ -10,58 +10,58 @@ resource "hcloud_firewall" "homelab" {
   name = "homelab-firewall"
 
   rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "22"
+    direction  = "in"
+    protocol   = "tcp"
+    port       = "22"
     source_ips = ["0.0.0.0/0", "::/0"]
   }
 
   rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "80"
+    direction  = "in"
+    protocol   = "tcp"
+    port       = "80"
     source_ips = ["0.0.0.0/0", "::/0"]
   }
 
   rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "443"
+    direction  = "in"
+    protocol   = "tcp"
+    port       = "443"
     source_ips = ["0.0.0.0/0", "::/0"]
   }
 
   rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "6443"
+    direction  = "in"
+    protocol   = "tcp"
+    port       = "6443"
     source_ips = ["0.0.0.0/0", "::/0"]
   }
 
   rule {
-    direction = "in"
-    protocol  = "icmp"
+    direction  = "in"
+    protocol   = "icmp"
     source_ips = ["0.0.0.0/0", "::/0"]
   }
 
-rule {
-  direction = "in"
-  protocol  = "tcp"
-  port      = "30080"
-  source_ips = ["0.0.0.0/0", "::/0"]
-}
+  rule {
+    direction  = "in"
+    protocol   = "tcp"
+    port       = "30080"
+    source_ips = ["0.0.0.0/0", "::/0"]
+  }
 
-rule {
-  direction = "in"
-  protocol  = "tcp"
-  port      = "30443"
-  source_ips = ["0.0.0.0/0", "::/0"]
-}
-rule {
-  direction  = "in"
-  protocol   = "tcp"
-  port       = "31000"
-  source_ips = ["0.0.0.0/0", "::/0"]
-}
+  rule {
+    direction  = "in"
+    protocol   = "tcp"
+    port       = "30443"
+    source_ips = ["0.0.0.0/0", "::/0"]
+  }
+  rule {
+    direction  = "in"
+    protocol   = "tcp"
+    port       = "31000"
+    source_ips = ["0.0.0.0/0", "::/0"]
+  }
 }
 
 resource "hcloud_server" "homelab" {
